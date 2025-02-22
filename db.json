@@ -1,0 +1,22 @@
+{
+  "postagens": [
+    {
+      "id": "1",
+      "titulo": "qwe",
+      "descricao": "asd zxc",
+      "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+    },
+    {
+      "id": "2",
+      "titulo": "titulo1",
+      "descricao": "descricao1",
+      "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+    },
+    {
+      "id": "3",
+      "titulo": "titulo1",
+      "descricao": "descricao1",
+      "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+    }
+  ]
+}
