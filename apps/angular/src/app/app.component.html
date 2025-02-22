@@ -1,0 +1,172 @@
+<div class="mx-3 my-3 zoomin animation-duration-500">
+
+
+  <p-toolbar styleClass="mb-4">
+    <ng-template #start>
+      <!--      <span class="font-bold mr-2">Exibição:</span>-->
+      <p-selectbutton [options]="visualizacoes" [(ngModel)]="visualizacao"
+                      optionLabel="label" optionValue="value" aria-labelledby="basic">
+        <ng-template #item let-item>
+          <i [class]="item.icon"></i> {{ item.label }}
+        </ng-template>
+      </p-selectbutton>
+    </ng-template>
+
+    <ng-template #end>
+      <p-button icon="pi pi-plus" class="mr-2" (onClick)="abrir()"
+                pTooltip="Cadastrar" severity="secondary" tooltipPosition="left" />
+    </ng-template>
+  </p-toolbar>
+
+
+  <!--<div *ngIf="visualizacao === Visualizacao.LISTA" class="fadein animation-duration-500">-->
+  <!--  <p-dataview #dv [value]="lista">-->
+  <!--    <ng-template #list let-items>-->
+  <!--      <div class="grid gap-4 grid-nogutter">-->
+  <!--        <div *ngFor="let item of items; let first = first">-->
+  <!--          <div class="flex flex-column sm:flex-row sm:align-items-center p-6 gap-4"-->
+  <!--            [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }">-->
+  <!--            <div class="md:w-40 relative">-->
+  <!--              <p-image [src]="item.foto" alt="Imagem" [width]="'400px'"-->
+  <!--                       class="block mx-auto rounded-border w-full" />-->
+  <!--            </div>-->
+  <!--            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">-->
+  <!--              <div>-->
+  <!--                <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{ item.titulo }}</div>-->
+  <!--                <span class="font-medium text-color-secondary text-sm">{{ item.descricao }}</span>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--              <div class="flex flex-row-reverse md:flex-row gap-2">-->
+  <!--                <p-button pRipple label="Deletar" icon="pi pi-trash"-->
+  <!--                          (click)="deletar(item)" severity="danger" variant="outlined" />-->
+  <!--                <p-button pRipple label="Alterar" icon="pi pi-pencil"-->
+  <!--                          (click)="passar(item)" severity="info" />-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </ng-template>-->
+  <!--  </p-dataview>-->
+  <!--</div>-->
+
+
+  <div *ngIf="visualizacao === Visualizacao.TABELA" class="fadein animation-duration-500 w-10 m-auto">
+
+    <p-table #dt [value]="lista" [rows]="5" [paginator]="true" [globalFilterFields]="['titulo','descricao']"
+             dataKey="id" selectionMode="single"
+             [(selection)]="item" responsiveLayout="scroll" [scrollable]="true"
+             (input)="dt.filterGlobal(obterPalavra($event.target), 'contains')">
+
+      <ng-template #caption>
+        <div class="flex align-items-center justify-content-between">
+          <h3 class="m-0">Postagens</h3>
+          <p-iconfield>
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" (input)="dt.filterGlobal(obterPalavra($event.target), 'contains')"
+                   placeholder="filtrar titulo ou descrição.." />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="foto">Foto
+            <p-sortIcon field="foto"></p-sortIcon>
+          </th>
+          <th pSortableColumn="titulo">Titulo
+            <p-sortIcon field="titulo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="descricao">Descrição
+            <p-sortIcon field="descricao"></p-sortIcon>
+          </th>
+        </tr>
+        <tr *ngIf="carregando">
+          <td>
+            <p-skeleton height="60px"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton height="60px"></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton height="60px"></p-skeleton>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item>
+        <tr (click)="passar(item)" class="cursor-pointer">
+          <td>
+            <p-image [src]="item.foto" alt="Imagem" [height]="'60px'" />
+          </td>
+          <td>{{ item.titulo }}</td>
+          <td>{{ item.descricao }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <div *ngIf="visualizacao === Visualizacao.CARTAO"
+       class="flex align-content-center justify-content-center gap-4 flex-wrap fadein animation-duration-500">
+    <p-card [style]="{ overflow: 'hidden' }" *ngFor="let item of lista" (click)="passar(item)"
+            class="w-full sm:w-5 lg:w-3 xl:w-2 cursor-pointer hover:border-bluegray-500 hover">
+      <ng-template #header>
+        <p-image [src]="item.foto" alt="Card" [width]="'100%'" />
+      </ng-template>
+      <ng-template #title> {{ item.titulo }}</ng-template>
+      <p>
+        {{ item.descricao }}
+      </p>
+    </p-card>
+  </div>
+
+
+  <p-dialog [(visible)]="janelaAberta" [style]="{width: '400px'}" [dismissableMask]="true"
+            header="{{item._id ? 'Alteração de postagem' : 'Cadastro de postagem'}}" [modal]="true"
+            styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+      <div class="text-center mb-5">
+
+        <label for="imagem">
+          <img src="{{item.foto ? item.foto : 'upload.png'}}" id="image" alt="image" width="200px" />
+          <input id="imagem" #imageInput type="file" accept="image/*" (change)="carregarImagem(imageInput)" style="display:none;" />
+        </label>
+
+        <p-divider></p-divider>
+
+      </div>
+
+      <label for="titulo" class="block text-900 font-medium my-2">Titulo</label>
+      <input id="titulo" type="text" [(ngModel)]="item.titulo" placeholder="Titulo.." pInputText class="w-full"
+             #titulo="ngModel" required>
+      <p-message [hidden]="titulo.valid || titulo.pristine" severity="error" variant="simple" size="small">
+        Campo obrigatório.
+      </p-message>
+
+      <label for="descricao" class="block text-900 font-medium my-2">Descrição</label>
+      <textarea id="descricao" name="descricao" rows="5" cols="30" pTextarea placeholder="Descrição.."
+                [(ngModel)]="item.descricao" class="w-full" #descricao="ngModel" required></textarea>
+
+      <p-message [hidden]="descricao.valid || descricao.pristine" severity="error" variant="simple" size="small">
+        Campo obrigatório.
+      </p-message>
+
+      <div class="flex justify-content-end gap-2 mt-4">
+        <p-button *ngIf="item._id" pRipple label="Deletar" severity="danger" icon="pi pi-trash"
+                  (click)="confirmar(item)" />
+
+        <p-button pRipple label="Salvar" severity="info" icon="pi pi-save" (click)="salvar()" />
+      </div>
+
+    </ng-template>
+  </p-dialog>
+
+</div>
+
+<router-outlet></router-outlet>
+
+<p-confirmDialog [style]="{width: '400px'}" />
+<p-toast />
+
+
