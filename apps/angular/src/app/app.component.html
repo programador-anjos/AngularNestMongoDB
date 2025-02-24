@@ -1,9 +1,11 @@
-<div class="mx-3 my-3 zoomin animation-duration-500">
+<div id="tela" class="zoomin animation-duration-500">
 
 
   <p-toolbar styleClass="mb-4">
     <ng-template #start>
-      <!--      <span class="font-bold mr-2">Exibição:</span>-->
+      <span class="font-bold text-2xl">Desafio Tagme</span>
+    </ng-template>
+    <ng-template #center>
       <p-selectbutton [options]="visualizacoes" [(ngModel)]="visualizacao"
                       optionLabel="label" optionValue="value" aria-labelledby="basic">
         <ng-template #item let-item>
@@ -13,53 +15,21 @@
     </ng-template>
 
     <ng-template #end>
-      <p-button icon="pi pi-plus" class="mr-2" (onClick)="abrir()"
+      <p-button id="cadastro" icon="pi pi-plus" class="mr-2" (onClick)="abrir()"
                 pTooltip="Cadastrar" severity="secondary" tooltipPosition="left" />
     </ng-template>
   </p-toolbar>
 
+  <div *ngIf="visualizacao === Visualizacao.TABELA" class="fadein animation-duration-500 shadow-6 w-10 m-auto">
 
-  <!--<div *ngIf="visualizacao === Visualizacao.LISTA" class="fadein animation-duration-500">-->
-  <!--  <p-dataview #dv [value]="lista">-->
-  <!--    <ng-template #list let-items>-->
-  <!--      <div class="grid gap-4 grid-nogutter">-->
-  <!--        <div *ngFor="let item of items; let first = first">-->
-  <!--          <div class="flex flex-column sm:flex-row sm:align-items-center p-6 gap-4"-->
-  <!--            [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }">-->
-  <!--            <div class="md:w-40 relative">-->
-  <!--              <p-image [src]="item.foto" alt="Imagem" [width]="'400px'"-->
-  <!--                       class="block mx-auto rounded-border w-full" />-->
-  <!--            </div>-->
-  <!--            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">-->
-  <!--              <div>-->
-  <!--                <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{ item.titulo }}</div>-->
-  <!--                <span class="font-medium text-color-secondary text-sm">{{ item.descricao }}</span>-->
-  <!--              </div>-->
-  <!--            </div>-->
-  <!--              <div class="flex flex-row-reverse md:flex-row gap-2">-->
-  <!--                <p-button pRipple label="Deletar" icon="pi pi-trash"-->
-  <!--                          (click)="deletar(item)" severity="danger" variant="outlined" />-->
-  <!--                <p-button pRipple label="Alterar" icon="pi pi-pencil"-->
-  <!--                          (click)="passar(item)" severity="info" />-->
-  <!--              </div>-->
-  <!--            </div>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </ng-template>-->
-  <!--  </p-dataview>-->
-  <!--</div>-->
-
-
-  <div *ngIf="visualizacao === Visualizacao.TABELA" class="fadein animation-duration-500 w-10 m-auto">
-
-    <p-table #dt [value]="lista" [rows]="5" [paginator]="true" [globalFilterFields]="['titulo','descricao']"
+    <p-table id="table" #dt [value]="lista" [rows]="5" [paginator]="true" [globalFilterFields]="['titulo','descricao']"
              dataKey="id" selectionMode="single"
              [(selection)]="item" responsiveLayout="scroll" [scrollable]="true"
              (input)="dt.filterGlobal(obterPalavra($event.target), 'contains')">
 
       <ng-template #caption>
         <div class="flex align-items-center justify-content-between">
-          <h3 class="m-0">Postagens</h3>
+          <h3 class="m-0" id="title">Postagens</h3>
           <p-iconfield>
             <p-inputicon styleClass="pi pi-search" />
             <input pInputText type="text" (input)="dt.filterGlobal(obterPalavra($event.target), 'contains')"
@@ -109,7 +79,7 @@
   <div *ngIf="visualizacao === Visualizacao.CARTAO"
        class="flex align-content-center justify-content-center gap-4 flex-wrap fadein animation-duration-500">
     <p-card [style]="{ overflow: 'hidden' }" *ngFor="let item of lista" (click)="passar(item)"
-            class="w-full sm:w-5 lg:w-3 xl:w-2 cursor-pointer hover:border-bluegray-500 hover">
+            class="w-10 sm:w-5 lg:w-3 xl:w-2 cursor-pointer hover:border-bluegray-500 hover">
       <ng-template #header>
         <p-image [src]="item.foto" alt="Card" [width]="'100%'" />
       </ng-template>
@@ -123,7 +93,7 @@
 
   <p-dialog [(visible)]="janelaAberta" [style]="{width: '400px'}" [dismissableMask]="true"
             header="{{item._id ? 'Alteração de postagem' : 'Cadastro de postagem'}}" [modal]="true"
-            styleClass="p-fluid">
+            styleClass="p-fluid" id="janela">
     <ng-template pTemplate="content">
 
       <div class="text-center mb-5">
@@ -160,6 +130,7 @@
       </div>
 
     </ng-template>
+
   </p-dialog>
 
 </div>
@@ -168,5 +139,4 @@
 
 <p-confirmDialog [style]="{width: '400px'}" />
 <p-toast />
-
 

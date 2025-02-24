@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PostagemService } from './services/PostagemService';
@@ -25,9 +25,10 @@ import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { Divider } from 'primeng/divider';
-import { PostagemDTO } from '../../../nest/src/app/compartilhado/dto/PostagemDTO';
 import { ToastService } from './utils/ToastService';
 import { v4 as uuidv4 } from 'uuid';
+import { PostagemDTO } from '../../../../libs/dtos/src/PostagemDTO';
+import Cropper from 'cropperjs';
 
 @Component({
   imports: [
@@ -74,7 +75,6 @@ export class AppComponent implements OnInit {
   lista: PostagemDTO[] = [];
   janelaAberta = false;
   carregando = false;
-  erroImagem = false;
 
   constructor(protected messageService: MessageService,
               protected confirmationService: ConfirmationService,
@@ -92,14 +92,14 @@ export class AppComponent implements OnInit {
 
 
       // let image = document.getElementById("image") as HTMLImageElement;
-      // image.width = 400
+      // // image.width = 400
       // cropper = new Cropper(image, {
       //   aspectRatio: 1,
       //   viewMode: 3,
       // });
 
 
-      this.item.foto = "loading.gif";
+      this.item.foto = 'loading.gif';
       this.postagemService.uploadImage(file).subscribe({
         next: (data: any) => {
           this.item.foto = data.data.display_url;
@@ -118,17 +118,17 @@ export class AppComponent implements OnInit {
     this.pesquisar();
   }
 
-  private pesquisar() {
+  pesquisar() {
     this.lista = [];
     this.carregando = true;
     this.postagemService.obter<PostagemDTO>().subscribe({
       next: (posts) => {
-        this.lista = posts;
         this.carregando = false;
+        this.lista = posts;
       },
       error: (e) => {
         this.carregando = false;
-        this.toastService.erro("Erro inesperado");
+        this.toastService.erro('Erro inesperado');
         console.error(e);
       }
     });
@@ -146,7 +146,7 @@ export class AppComponent implements OnInit {
 
   salvar() {
     if (!this.item.foto) {
-      this.toastService.erro("Selecione uma imagem para cadastro.");
+      this.toastService.erro('Selecione uma imagem para cadastro.');
     } else if (this.item.titulo && this.item.descricao) {
       if (this.item._id) {
         this.alterar();
@@ -160,7 +160,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private cadastrar() {
+  cadastrar() {
     this.carregando = true;
     this.postagemService.criar(this.item).subscribe({
       next: () => {
@@ -168,13 +168,14 @@ export class AppComponent implements OnInit {
         this.toastService.sucesso('Postagem cadastrada.');
       },
       error: (e) => {
-        this.toastService.erro("Erro inesperado");
+        this.carregando = false;
+        this.toastService.erro('Erro inesperado');
         console.error(e);
       }
     });
   }
 
-  private alterar() {
+  alterar() {
     this.carregando = true;
     this.postagemService.alterar(this.item).subscribe({
       next: () => {
@@ -182,7 +183,8 @@ export class AppComponent implements OnInit {
         this.toastService.sucesso('Postagem alterada.');
       },
       error: (e) => {
-        this.toastService.erro("Erro inesperado");
+        this.carregando = false;
+        this.toastService.erro('Erro inesperado');
         console.error(e);
       }
     });
@@ -211,7 +213,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private deletar(id: string) {
+  deletar(id: string) {
     this.carregando = true;
     this.postagemService.deletar(id)
       .subscribe({
@@ -222,19 +224,10 @@ export class AppComponent implements OnInit {
           this.toastService.sucesso('Postagem deletada.');
         },
         error: (e) => {
-          this.toastService.erro("Erro inesperado");
+          this.toastService.erro('Erro inesperado');
           console.error(e);
         }
       });
-  }
-
-  onBasicUploadAuto(event: any) {
-    let file = event.files[0];
-    console.log(file);
-
-    this.item.foto = file.objectURL;
-
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
   }
 
   obterPalavra(target: any) {
@@ -242,6 +235,8 @@ export class AppComponent implements OnInit {
   }
 
   protected readonly Visualizacao = Visualizacao;
+
+
 }
 
 export enum Visualizacao {

@@ -1,2 +1,7 @@
 @import "primeflex/primeflex.css";
 @import "primeicons/primeicons.css";
+/*@import "cropperjs/dist/cropper.css";*/
+
+* {
+  font-family: inter, sans-serif;
+}

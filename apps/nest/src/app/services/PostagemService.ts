@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post } from '../entities/Post';
-import { PostagemDTO } from '../compartilhado/dto/PostagemDTO';
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { PostagemDTO } from '../../../../../libs/dtos/src/PostagemDTO';
 
 @Injectable()
 export class PostagemService {

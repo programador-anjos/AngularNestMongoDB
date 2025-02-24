@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import { environmentLocal } from '../../environments/environment.local';
-import { GenericoDTO } from '../../../../nest/src/app/compartilhado/dto/GenericoDTO';
+import { GenericoDTO } from '../../../../../libs/dtos/src/GenericoDTO';
 
 @Injectable({
   providedIn: 'root',

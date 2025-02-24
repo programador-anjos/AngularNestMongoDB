@@ -1,6 +1,6 @@
 import {GenericoDTO} from './GenericoDTO';
 
-export class PostagemDTO extends  GenericoDTO<PostagemDTO> {
+export class PostagemDTO extends GenericoDTO<PostagemDTO> {
   titulo = '';
   descricao = '';
   foto = '';

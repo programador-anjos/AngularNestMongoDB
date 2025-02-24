@@ -19,6 +19,7 @@
     "@nestjs/platform-express": "^11.0.10",
     "@primeng/themes": "^19.0.7",
     "axios": "^1.6.0",
+    "cropperjs": "^1.6.2",
     "json-server": "^1.0.0-beta.3",
     "mongodb": "^6.13.1",
     "mongoose": "^8.10.1",

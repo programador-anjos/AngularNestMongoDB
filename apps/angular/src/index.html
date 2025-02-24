@@ -2,12 +2,108 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>angular</title>
+    <title>Desafio Tagme</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+<!--    <link rel="stylesheet" href="/cropper.css" />-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.min.css" integrity="sha512-97dtgbI9un6a/TexDMZSlzD3o6k+WvB0CSd22Omar3JeJu5nn7Qb9DFdJ5NXeQuV1q2Ukq44fhzvY1x9m2U3aQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+<!--    <style>-->
+<!--      .container {-->
+<!--        margin: 20px auto;-->
+<!--        width: 400px;-->
+<!--      }-->
+
+<!--      img {-->
+<!--        max-width: 400px;-->
+<!--      }-->
+
+<!--      .cropper-view-box,-->
+<!--      .cropper-face {-->
+<!--        border-radius: 50%;-->
+<!--      }-->
+
+<!--      /* The css styles for `outline` do not follow `border-radius` on iOS/Safari (#979). */-->
+<!--      .cropper-view-box {-->
+<!--        outline: 0;-->
+<!--        box-shadow: 0 0 0 1px #39f;-->
+<!--      }-->
+<!--    </style>-->
   </head>
-  <body class="bg-gray-300">
+  <body class="m-0 bg-gray-300">
     <app-root></app-root>
+
+
+
+<!--    <img id="image" src="/upload.png" alt="Picture" />-->
+<!--    <button type="button" id="button">Crop</button>-->
+<!--    <div id="result"></div>-->
+
+<!--    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
+<!--    <script src="/cropper.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.min.js" integrity="sha512-gr1iLqVmt8ELSMheu/FgyziHHGA2jnUTa2yX2Uf59CNif17GJ5h247vZMyw7+TMtYdTivQIEw/WLe6UVKzW+WA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.0.0/cropper.js" integrity="sha512-XRaYDjsse57bSVlEdAUsuyRBTLUZC9G/gQgTrHC05PpFz3hbo9PLmy94EifsQTi+a8x2e9SkXbgeKGXyOsLQVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+
+<!--    <script>-->
+<!--      function getRoundedCanvas(sourceCanvas) {-->
+<!--        var canvas = document.createElement("canvas");-->
+<!--        var context = canvas.getContext("2d");-->
+<!--        var width = sourceCanvas.width;-->
+<!--        var height = sourceCanvas.height;-->
+
+<!--        canvas.width = width;-->
+<!--        canvas.height = height;-->
+<!--        context.imageSmoothingEnabled = true;-->
+<!--        context.drawImage(sourceCanvas, 0, 0, width, height);-->
+<!--        context.globalCompositeOperation = "destination-in";-->
+<!--        context.beginPath();-->
+<!--        context.arc(-->
+<!--          width / 2,-->
+<!--          height / 2,-->
+<!--          Math.min(width, height) / 2,-->
+<!--          0,-->
+<!--          2 * Math.PI,-->
+<!--          true-->
+<!--        );-->
+<!--        context.fill();-->
+<!--        return canvas;-->
+<!--      }-->
+
+<!--      window.addEventListener("DOMContentLoaded", function () {-->
+<!--        var image = document.getElementById("image");-->
+<!--        var button = document.getElementById("button");-->
+<!--        var result = document.getElementById("result");-->
+<!--        var croppable = false;-->
+<!--        var cropper = new Cropper(image, {-->
+<!--          aspectRatio: 1,-->
+<!--          viewMode: 1,-->
+<!--          ready: function () {-->
+<!--            croppable = true;-->
+<!--          },-->
+<!--        });-->
+
+<!--        button.onclick = function () {-->
+<!--          var croppedCanvas;-->
+<!--          var roundedCanvas;-->
+<!--          var roundedImage;-->
+
+<!--          if (!croppable) {-->
+<!--            return;-->
+<!--          }-->
+
+<!--          // Crop-->
+<!--          croppedCanvas = cropper.getCroppedCanvas();-->
+
+<!--          // Round-->
+<!--          roundedCanvas = getRoundedCanvas(croppedCanvas);-->
+
+<!--          // Show-->
+<!--          roundedImage = document.createElement("img");-->
+<!--          roundedImage.src = roundedCanvas.toDataURL();-->
+<!--          result.innerHTML = "";-->
+<!--          result.appendChild(roundedImage);-->
+<!--        };-->
+<!--      });-->
+<!--    </script>-->
   </body>
 </html>

@@ -2,20 +2,20 @@
   "postagens": [
     {
       "id": "1",
-      "titulo": "qwe",
-      "descricao": "asd zxc",
+      "titulo": "titulo1",
+      "descricao": "descricao1",
       "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
     },
     {
       "id": "2",
-      "titulo": "titulo1",
-      "descricao": "descricao1",
+      "titulo": "titulo2",
+      "descricao": "descricao2",
       "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
     },
     {
       "id": "3",
-      "titulo": "titulo1",
-      "descricao": "descricao1",
+      "titulo": "titulo3",
+      "descricao": "descricao3",
       "foto": "https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
     }
   ]
